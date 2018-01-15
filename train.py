@@ -23,7 +23,7 @@ K.set_image_dim_ordering('tf')
 # Model type
 model_type = 'wow_128_04'
 
-# test dataset
+# test dataset img 
 model_dataset = 'dataset_' + model_type
 
 # Dataset dir paths
