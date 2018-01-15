@@ -1,9 +1,0 @@
-.gitignore
-*.jpg
-*.png
-*.h5
-*.pyc
-training_log/tensorbord/*
-.ipynb_checkpoints
-*
-!.gitignore
