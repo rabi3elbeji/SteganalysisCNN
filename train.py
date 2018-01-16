@@ -21,14 +21,14 @@ K.set_image_dim_ordering('tf')
 
 
 # Model type
-model_type = 'wow_128_04'
+model_type = 'su_128_01'
 
-# test dataset img 
+# test dataset img
 model_dataset = 'dataset_' + model_type
 
 # Dataset dir paths
-train_data_dir = './datasets/'+model_dataset+'/train'
-validation_data_dir = './datasets/'+model_dataset+'/validation'
+train_data_dir = './datasets/' + model_dataset + '/train'
+validation_data_dir = './datasets/' + model_dataset + '/validation'
 
 
 # Images width, height, channels
@@ -44,12 +44,17 @@ image_shape = (img_height, img_width, num_channels)
 class_number = 2
 
 # model ==> output paths
-model_png = './trained_for_pred/'+model_type+'/model/scratch_model.png'
-model_summary_file = './trained_for_pred/'+model_type+'/model/scratch_model_summary.txt'
-saved_model_arch_path = './trained_for_pred/'+model_type+'/model/scratch_model.json'
-saved_model_classid_path = './trained_for_pred/'+model_type+'/model/scratch_model_classid.json'
-train_log_path = './trained_for_pred/'+model_type+'/model/log/model_train.csv'
-train_checkpoint_path = './trained_for_pred/'+model_type+'/model/log/Best-weights-my_model-{epoch:03d}-{loss:.4f}-{acc:.4f}.h5'
+model_png = './trained_for_pred/' + model_type + '/model/scratch_model.png'
+model_summary_file = './trained_for_pred/' + \
+    model_type + '/model/scratch_model_summary.txt'
+saved_model_arch_path = './trained_for_pred/' + \
+    model_type + '/model/scratch_model.json'
+saved_model_classid_path = './trained_for_pred/' + \
+    model_type + '/model/scratch_model_classid.json'
+train_log_path = './trained_for_pred/' + \
+    model_type + '/model/log/model_train.csv'
+train_checkpoint_path = './trained_for_pred/' + model_type + \
+    '/model/log/Best-weights-my_model-{epoch:03d}-{loss:.4f}-{acc:.4f}.h5'
 model_tensorboard_log = './training_log/tensorbord/'
 
 
@@ -57,7 +62,6 @@ model_tensorboard_log = './training_log/tensorbord/'
 num_of_epoch = 50
 num_of_train_samples = 3398
 num_of_validation_samples = 400
-
 
 
 # Cost function
@@ -79,12 +83,16 @@ train_batch_size = 16
 val_batch_size = 32
 
 # for deleting a file
+
+
 def delete_file(filename):
     if os.path.exists(filename):
         os.remove(filename)
         pass
 
 # for saving model summary into a file
+
+
 def save_summary(s):
     with open(model_summary_file, 'a') as f:
         f.write('\n' + s)
@@ -112,7 +120,12 @@ def main():
     print("===================== load model architecture =========================")
     model = scratchModel.get_model_architecture()
     # plot the model
-    #plot_model(model, to_file=model_png) # not working with windows
+    # plot_model(model, to_file=model_png)  # not working with windows
+    # serialize model to JSON
+    model_json = model.to_json()
+    with open(saved_model_arch_path, "w") as json_file:
+        json_file.write(model_json)
+
     print("===================== compile model =========================")
 
     # Compile the model
@@ -137,7 +150,6 @@ def main():
     print("===================== start training model =========================")
     # start training
 
-
     history = model.fit_generator(train_data,
                                   steps_per_epoch=num_of_train_samples // train_batch_size,
                                   epochs=num_of_epoch,
@@ -147,12 +159,6 @@ def main():
                                   callbacks=callbacks_list)
 
     print(history)
-    print("===================== saving trained model architecture =========================")
-    # serialize model to JSON
-    model_json = model.to_json()
-    with open(saved_model_arch_path, "w") as json_file:
-        json_file.write(model_json)
-
     print("========================= training process completed! ===========================")
 
 
