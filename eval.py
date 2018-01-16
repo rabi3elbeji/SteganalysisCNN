@@ -48,13 +48,13 @@ train_log_data_path = './trained_for_pred/' + \
     model_type + '/model/log/model_train.csv'
 
 save_plt_accuracy = './trained_for_pred/' + \
-    model_type + '/stats/model_accuracy1.png'
+    model_type + '/stats/model_accuracy.png'
 
 save_plt_loss = './trained_for_pred/' + \
-    model_type + '/stats/model_loss1.png'
+    model_type + '/stats/model_loss.png'
 
 save_plt_learning = './trained_for_pred/' + \
-    model_type + '/stats/model_learning1.png'
+    model_type + '/stats/model_learning.png'
 # Cost function
 model_loss_function = 'categorical_crossentropy'
 
