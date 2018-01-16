@@ -65,6 +65,8 @@ model_optimizer_rmsprop = 'rmsprop'
 # model metrics to evaluate training
 model_metrics = ["accuracy"]
 
+# batch size
+batch_size = 16
 
 # Load architecture and weights of the model
 def load_model():
@@ -98,7 +100,7 @@ def main():
     print("===================== start eval =========================")
     y_true = test_data.classes
     # Confution Matrix and Classification Report
-    Y_pred = model.predict_generator(test_data)
+    Y_pred = model.predict_generator(test_data, num_of_test_samples // batch_size+1)
     y_pred = np.argmax(Y_pred, axis=1)
     # plot confusion matrix
     cm = confusion_matrix(y_true, y_pred)
