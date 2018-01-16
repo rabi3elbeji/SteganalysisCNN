@@ -112,7 +112,7 @@ def main():
     print("===================== load model architecture =========================")
     model = scratchModel.get_model_architecture()
     # plot the model
-    plot_model(model, to_file=model_png)
+    #plot_model(model, to_file=model_png) # not working with windows
     print("===================== compile model =========================")
 
     # Compile the model

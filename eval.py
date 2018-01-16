@@ -48,13 +48,13 @@ train_log_data_path = './trained_for_pred/' + \
     model_type + '/model/log/model_train.csv'
 
 save_plt_accuracy = './trained_for_pred/' + \
-    model_type + '/stats/model_accuracy1.png'
+    model_type + '/stats/model_accuracy.png'
 
 save_plt_loss = './trained_for_pred/' + \
-    model_type + '/stats/model_loss1.png'
+    model_type + '/stats/model_loss.png'
 
 save_plt_learning = './trained_for_pred/' + \
-    model_type + '/stats/model_learning1.png'
+    model_type + '/stats/model_learning.png'
 # Cost function
 model_loss_function = 'categorical_crossentropy'
 
@@ -65,6 +65,8 @@ model_optimizer_rmsprop = 'rmsprop'
 # model metrics to evaluate training
 model_metrics = ["accuracy"]
 
+# batch size
+batch_size = 16
 
 # Load architecture and weights of the model
 def load_model():
@@ -98,7 +100,7 @@ def main():
     print("===================== start eval =========================")
     y_true = test_data.classes
     # Confution Matrix and Classification Report
-    Y_pred = model.predict_generator(test_data)
+    Y_pred = model.predict_generator(test_data, num_of_test_samples // batch_size+1)
     y_pred = np.argmax(Y_pred, axis=1)
     # plot confusion matrix
     cm = confusion_matrix(y_true, y_pred)
