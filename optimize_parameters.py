@@ -72,7 +72,8 @@ def log_dir_name(learning_rate, num_dense_layers,
     return log_dir
 
 
-
+def main():
+  pass
 
 
 
