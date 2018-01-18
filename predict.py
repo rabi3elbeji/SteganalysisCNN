@@ -16,7 +16,7 @@ from keras import backend as K
 K.set_image_dim_ordering('tf')
 
 # model type
-model_type = 'wow_128_04'
+model_type = 'mg_128_04'
 
 # path to saved model files
 saved_model_weights_path = './trained_for_pred/'+model_type+'/model/scratch_model.h5'
@@ -119,8 +119,16 @@ def main():
     input_stego_images = os.listdir(input_samples_stego_path)
     input_cover_images = os.listdir(input_samples_cover_path)
 
+    # stats variable if missclassified number
+    total_cover = 0
+    total_stego = 0
+    miss_cover = 0
+    miss_stego = 0
+
     # loop stego dir
     for image_name in input_stego_images:
+        # count stego img 
+        total_stego += 1
         # Get the image
         image_path = input_samples_stego_path + image_name
         start_processing = time.time()
@@ -138,6 +146,8 @@ def main():
             cv2.rectangle(image_cv, (word_xmin, word_ymin),
                           (word_xmax, word_ymax), (0, 255, 0), -1)
         else:
+            # count miss stego
+            miss_stego += 1
             cv2.rectangle(image_cv, (word_xmin, word_ymin),
                           (word_xmax, word_ymax), (0, 0, 255), -1)
         cv2.putText(image_cv, class_name, (5, 15), TEXT_FONT,
@@ -147,6 +157,8 @@ def main():
 
     # loop stego dir
     for image_name in input_cover_images:
+        #count cover img
+        total_cover += 1
         # Get the image
         image_path = input_samples_cover_path + image_name
         start_processing = time.time()
@@ -164,6 +176,8 @@ def main():
             cv2.rectangle(image_cv, (word_xmin, word_ymin),
                           (word_xmax, word_ymax), (0, 255, 0), -1)
         else:
+            #count miss cover
+            miss_cover += 1
             cv2.rectangle(image_cv, (word_xmin, word_ymin),
                           (word_xmax, word_ymax), (0, 0, 255), -1)
         cv2.putText(image_cv, class_name, (5, 15), TEXT_FONT,
@@ -171,6 +185,8 @@ def main():
         cv2.imwrite(output_samples_path + 'cover_' +
                     image_name[:-3] + 'jpg', image_cv)
 
+    print('Total cover images: '+str(total_cover)+" - miss cover number: "+str(miss_cover))
+    print('Total stego images: '+str(total_stego)+" - miss stego number: "+str(miss_stego))
 
 if __name__ == "__main__":
     main()
