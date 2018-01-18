@@ -267,6 +267,7 @@ class PlotData(object):
 
                 # Plot image.
                 im = ax.imshow(img, vmin=w_min, vmax=w_max,
+                               cmap=plt.cm.jet,
                                interpolation='nearest')
 
             # Remove ticks from the plot.
@@ -309,6 +310,7 @@ class PlotData(object):
 
                 # Plot image.
                 im = ax.imshow(img, vmin=w_min, vmax=w_max,
+                               cmap=plt.cm.jet,
                                interpolation='nearest')
 
             # Remove ticks from the plot.
@@ -324,7 +326,7 @@ class PlotData(object):
     def plot_2d_array(self, arr, filename):
         plt.figure()
         plt.clf()
-        plt.imshow(arr)
+        plt.imshow(arr, cmap=plt.cm.jet)
         plt.axis('off')
         plt.colorbar(orientation='vertical')
         plt.savefig(filename)
@@ -349,7 +351,7 @@ class PlotData(object):
                 img = values[0, :, :, i]
 
                 # Plot image.
-                im = ax.imshow(img, interpolation='nearest')
+                im = ax.imshow(img, interpolation='nearest', cmap=plt.cm.jet)
 
             # Remove ticks from the plot.
             ax.set_xticks([])
@@ -375,7 +377,7 @@ class PlotData(object):
                 img = values[0, :, :, i]
 
                 # Plot image.
-                im = ax.imshow(img, interpolation='nearest')
+                im = ax.imshow(img, interpolation='nearest', cmap=plt.cm.jet)
 
             # Remove ticks from the plot.
             ax.set_xticks([])
