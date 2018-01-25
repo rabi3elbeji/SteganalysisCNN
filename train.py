@@ -21,7 +21,7 @@ K.set_image_dim_ordering('tf')
 
 
 # Model type
-model_type = 'su_128_01'
+model_type = 'mg_128_01'
 
 # test dataset img
 model_dataset = 'dataset_' + model_type
@@ -60,12 +60,12 @@ model_tensorboard_log = './training_log/tensorbord/'
 
 # model training params
 num_of_epoch = 50
-num_of_train_samples = 3398
-num_of_validation_samples = 400
+num_of_train_samples = 3400
+num_of_validation_samples = 600
 
 
 # Cost function
-model_loss_function = 'categorical_crossentropy'
+model_loss_function = 'binary_crossentropy'
 
 
 # define optimizers
@@ -120,7 +120,7 @@ def main():
     print("===================== load model architecture =========================")
     model = scratchModel.get_model_architecture()
     # plot the model
-    # plot_model(model, to_file=model_png)  # not working with windows
+    plot_model(model, to_file=model_png)  # not working with windows
     # serialize model to JSON
     model_json = model.to_json()
     with open(saved_model_arch_path, "w") as json_file:
@@ -132,6 +132,9 @@ def main():
     model = scratchModel.compile_model(
         model, model_loss_function, model_optimizer_rmsprop, model_metrics)
 
+
+
+    '''
     # Delete the last summary file
     delete_file(model_summary_file)
     # Add the new model summary
@@ -160,6 +163,7 @@ def main():
 
     print(history)
     print("========================= training process completed! ===========================")
+    '''
 
 
 if __name__ == "__main__":
