@@ -11,6 +11,8 @@ Dropout basically shuts down a few weights of the network randomly.
 # import libraries
 from keras import backend as K
 K.set_image_dim_ordering('tf')
+
+
 from keras.utils import np_utils
 from keras.layers import Merge, Lambda, Layer, GlobalAveragePooling2D
 from keras.models import Sequential, InputLayer, Input
@@ -52,7 +54,6 @@ class ScratchModel(object):
 
         return model
 
-    # compile the model
     def compile_model(self, model, loss, optimizer, metrics):
         model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
         return model

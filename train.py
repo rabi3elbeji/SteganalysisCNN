@@ -21,8 +21,8 @@ K.set_image_dim_ordering('tf')
 
 
 # Model type
-model_type = 'hugo_128_15'
-last_model_type = 'hugo_128_15'
+model_type = 'wow_128_03'
+last_model_type = 'wow_128_05'
 
 # test dataset img
 model_dataset = 'dataset_' + model_type
@@ -60,7 +60,7 @@ model_tensorboard_log = './training_log/tensorbord/'
 
 
 # model training params
-num_of_epoch = 10
+num_of_epoch = 20
 num_of_train_samples = 3400
 num_of_validation_samples = 600
 
@@ -76,7 +76,7 @@ model_optimizer_adam = Adam(lr=0.003, decay=0.00001)
 model_optimizer_sgd = SGD(lr=1e-4, decay=1e-6, momentum=0.9, nesterov=True)
 
 
-best_weights = 'trained_for_pred/'+last_model_type+'/model/Best-weights.h5'
+best_weights = 'trained_for_pred/' + last_model_type + '/model/Best-weights.h5'
 
 # model metrics to evaluate training
 model_metrics = ["accuracy"]
@@ -102,6 +102,16 @@ def save_summary(s):
         f.close()
         pass
 
+# predefined weights for preprocessing
+KV = np.array([[-1, 2, -2, 2, -1], [2, -6, 8, -6, 2], [-2, 8, -12, 8, -2],
+               [2, -6, 8, -6, 2], [-1, 2, -2, 2, -1]], dtype=np.float32) / 12
+
+KM = np.array([[0, 0, 5.2, 0, 0], [0, 23.4, 36.4, 23.4, 0], [
+    5.2, 36.4, -261, 36.4, 5.2], [0, 23.4, 36.4, 23.4, 0], [0, 0, 5.2, 0, 0]], dtype=np.float32) / 261
+
+GH = np.array([[0.0562, -0.1354, 0, 0.1354, -0.0562], [0.0818, -0.1970, 0, 0.1970, -0.0818], [0.0926, -0.2233, 0,
+                                                                                              0.2233, -0.0926], [0.0818, -0.1970, 0, 0.1970, -0.0818], [0.0562, -0.1354, 0, 0.1354, -0.0562]], dtype=np.float32)
+GV = np.fliplr(GH).T.copy()
 
 local_weights = "weights.png"
 
@@ -138,17 +148,6 @@ def main():
     model = scratchModel.compile_model(
         model, model_loss_function, model_optimizer_rmsprop, model_metrics)
 
-    # predefined weights for preprocessing
-    KV = np.array([[-1, 2, -2, 2, -1], [2, -6, 8, -6, 2], [-2, 8, -12, 8, -2],
-                   [2, -6, 8, -6, 2], [-1, 2, -2, 2, -1]], dtype=np.float32) / 12
-
-    KM = np.array([[0, 0, 5.2, 0, 0], [0, 23.4, 36.4, 23.4, 0], [
-        5.2, 36.4, -261, 36.4, 5.2], [0, 23.4, 36.4, 23.4, 0], [0, 0, 5.2, 0, 0]], dtype=np.float32) / 261
-
-    GH = np.array([[0.0562, -0.1354, 0, 0.1354, -0.0562], [0.0818, -0.1970, 0, 0.1970, -0.0818], [0.0926, -0.2233, 0,
-                                                                                                  0.2233, -0.0926], [0.0818, -0.1970, 0, 0.1970, -0.0818], [0.0562, -0.1354, 0, 0.1354, -0.0562]], dtype=np.float32)
-    GV = np.fliplr(GH).T.copy()
-
     # prepare weights for the model
     Kernels = np.empty([5, 5, 4], dtype=np.float32)
     for i in xrange(0, 5):
@@ -162,9 +161,9 @@ def main():
 
     preprocess_weights = np.reshape(Kernels, (5, 5, 1, 4))
 
-    model.set_weights([preprocess_weights])
+    # model.set_weights([preprocess_weights])
 
-    #model.load_weights(best_weights)
+    model.load_weights(best_weights)
 
     # Re-compile model with the setted wegiht
     model = scratchModel.compile_model(
