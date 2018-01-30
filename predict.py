@@ -16,10 +16,10 @@ from keras import backend as K
 K.set_image_dim_ordering('tf')
 
 # model type
-model_type = 'mg_128_04'
+model_type = 'wow_128_10'
 
 # path to saved model files
-saved_model_weights_path = './trained_for_pred/'+model_type+'/model/scratch_model.h5'
+saved_model_weights_path = './trained_for_pred/'+model_type+'/model/Best-weights.h5'
 saved_model_arch_path = './trained_for_pred/'+model_type+'/model/scratch_model.json'
 saved_model_classid_path = './trained_for_pred/'+model_type+'/model/scratch_model_classid.json'
 
@@ -27,14 +27,14 @@ saved_model_classid_path = './trained_for_pred/'+model_type+'/model/scratch_mode
 model_optimizer_rmsprop = 'rmsprop'
 
 # model loss function
-model_loss_function = 'categorical_crossentropy'
+model_loss_function = 'binary_crossentropy'
 
 # model metrics
 metrics = ['accuracy']
 
 # set the input and the output paths
-input_samples_stego_path = './trained_for_pred/'+model_type+'/predictions/inputs/stego/'
-input_samples_cover_path = './trained_for_pred/'+model_type+'/predictions/inputs/cover/'
+input_samples_stego_path = './datasets/dataset_'+model_type+'/test/stego/'
+input_samples_cover_path = './datasets/dataset_'+model_type+'/test/cover/'
 output_samples_path = './trained_for_pred/'+model_type+'/predictions/outputs/'
 stego_class = 'stego'
 cover_class = 'cover'
@@ -45,13 +45,7 @@ TEXT_FONT = cv2.FONT_HERSHEY_PLAIN
 TEXT_FONT_SCALE = 1
 TEXT_THICKNESS = 2
 
-# HPF kernel
-hpf_kernel = np.array(
-    [[-1,  2,  -2,  2, -1],
-     [2, -6,   8, -6,  2],
-     [-2,  8, -12,  8, -2],
-     [2, -6,   8, -6,  2],
-     [-1,  2,  -2,  2, -1]])
+
 
 # Load architecture and weights of the model
 
@@ -85,9 +79,6 @@ def preprocess(image):
     image_cv = image.copy()
     if len(image_cv.shape) == 2:
         image_cv = cv2.cvtColor(image_cv, cv2.COLOR_GRAY2BGR)
-
-    # app the HPF filter
-    image = cv2.filter2D(image, -1, hpf_kernel)
 
     image = np.array(image)
     image = np.expand_dims(image, axis=2)

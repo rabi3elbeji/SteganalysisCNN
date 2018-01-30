@@ -14,13 +14,13 @@ from keras import backend as K
 K.set_image_dim_ordering('tf')
 
 # Model type
-model_type = 'wow_128_04'
+model_type = 'hugo_128_03'
 
 # Images width, height, channels
 img_height = 128
 img_width = 128
 # number of test samples in the dataset
-num_of_test_samples = 202
+num_of_test_samples = 800
 
 # for confusion matrix plotting
 cm_plot_labels = ['cover', 'stego']
@@ -30,7 +30,7 @@ model_test_dataset = 'dataset_' + model_type
 
 # path to saved model files
 saved_model_weights_path = './trained_for_pred/' + \
-    model_type + '/model/scratch_model.h5'
+    model_type + '/model/Best-weights.h5'
 saved_model_arch_path = './trained_for_pred/' + \
     model_type + '/model/scratch_model.json'
 test_data_dir = './datasets/' + model_test_dataset + '/test'
@@ -56,7 +56,7 @@ save_plt_loss = './trained_for_pred/' + \
 save_plt_learning = './trained_for_pred/' + \
     model_type + '/stats/model_learning.png'
 # Cost function
-model_loss_function = 'categorical_crossentropy'
+model_loss_function = 'binary_crossentropy'
 
 
 # define optimizers
@@ -100,7 +100,7 @@ def main():
     print("===================== start eval =========================")
     y_true = test_data.classes
     # Confution Matrix and Classification Report
-    Y_pred = model.predict_generator(test_data, num_of_test_samples // batch_size+1)
+    Y_pred = model.predict_generator(test_data, num_of_test_samples // batch_size)
     y_pred = np.argmax(Y_pred, axis=1)
     # plot confusion matrix
     cm = confusion_matrix(y_true, y_pred)
