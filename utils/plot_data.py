@@ -15,7 +15,7 @@ class PlotData(object):
 
     def __init__(self):
         super(PlotData, self).__init__()
-        matplotlib.style.use('ggplot')
+        # matplotlib.style.use('ggplot')
 
     def plot_2d(self, x, y, x_label, y_label, title, legend_arr, path_to_save):
         fig = plt.figure()
@@ -87,6 +87,95 @@ class PlotData(object):
         axs[1].set_xticks(np.arange(1, len(model_details[
                           'loss']) + 1), len(model_details['loss']) / 10)
         axs[1].legend(['train', 'validation'], loc='best')
+
+        # Save plot
+        plt.savefig(path_to_save)
+
+        # This is not part of the code (is just for plotting custom data)
+    def plot_detection_error(self, data_x, data_y, colors, linestyles, markers, legend, path_to_save):
+        plt.clf()
+
+        plt.style.use('classic')
+        plt.plot(data_x, data_y[0], color=colors[0],
+                 linestyle=linestyles[0], marker=markers[0])
+        plt.plot(data_x, data_y[1], color=colors[1],
+                 linestyle=linestyles[0], marker=markers[1])
+        plt.plot(data_x, data_y[2], color=colors[2],
+                 linestyle=linestyles[0], marker=markers[2])
+        plt.ylabel(r'$P_{E}$')
+        plt.xlabel('Payload (bpp)')
+        plt.legend(legend, loc='best', prop={
+                   'size': 10.2, 'weight': 'semibold', 'family': 'monospace'})
+        plt.grid(True)
+        plt.xticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+                    0.7, 0.8, 0.9, 1.0, 1.1])
+        # Save plot
+        plt.savefig(path_to_save)
+
+    # This is not part of the code (is just for plotting custom data)
+    def plot_custom_data(self, model_details, colors, linestyles, markers, legend, path_to_save):
+
+        # Create sub-plots
+        plt.clf()
+        fig, axs = plt.subplots(1, 2, figsize=(15, 5))
+        plt.style.use('classic')
+
+        # Summarize history for accuracy
+        # payload 0.7 bpp
+        axs[0].plot(range(1, len(model_details['acc07']) + 1),
+                    model_details['acc07'], color=colors[0], linestyle=linestyles[0], marker=markers[0])
+        axs[0].plot(range(1, len(model_details['val_acc07']) + 1),
+                    model_details['val_acc07'], color=colors[0], linestyle=linestyles[1], marker=markers[1])
+
+        # payload 0.5 bpp
+        axs[0].plot(range(1, len(model_details['acc05']) + 1),
+                    model_details['acc05'], color=colors[1], linestyle=linestyles[0], marker=markers[0])
+        axs[0].plot(range(1, len(model_details['val_acc05']) + 1),
+                    model_details['val_acc05'], color=colors[1], linestyle=linestyles[1], marker=markers[1])
+
+        # payload 0.3 bpp
+        axs[0].plot(range(1, len(model_details['acc03']) + 1),
+                    model_details['acc03'], color=colors[2], linestyle=linestyles[0], marker=markers[0])
+        axs[0].plot(range(1, len(model_details['val_acc03']) + 1),
+                    model_details['val_acc03'], color=colors[2], linestyle=linestyles[1], marker=markers[1])
+
+        axs[0].set_title('Model Accuracy')
+        axs[0].set_ylabel('Accuracy')
+        axs[0].set_xlabel('Epoch')
+
+        axs[0].legend(legend, loc='best', prop={
+                      'size': 8.2, 'weight': 'semibold', 'family': 'monospace'})
+        axs[0].grid(True)
+
+        # Summarize history for loss
+        # payload 0.7 bpp
+        axs[1].plot(range(1, len(model_details['loss07']) + 1),
+                    model_details['loss07'], color=colors[0], linestyle=linestyles[0], marker=markers[0])
+        axs[1].plot(range(1, len(model_details['val_loss07']) + 1),
+                    model_details['val_loss07'], color=colors[0], linestyle=linestyles[1], marker=markers[1])
+
+        # payload 0.5 bpp
+        axs[1].plot(range(1, len(model_details['loss05']) + 1),
+                    model_details['loss05'], color=colors[1], linestyle=linestyles[0], marker=markers[0])
+        axs[1].plot(range(1, len(model_details['val_loss05']) + 1),
+                    model_details['val_loss05'], color=colors[1], linestyle=linestyles[1], marker=markers[1])
+
+        # payload 0.3 bpp
+        axs[1].plot(range(1, len(model_details['loss03']) + 1),
+                    model_details['loss03'], color=colors[2], linestyle=linestyles[0], marker=markers[0])
+        axs[1].plot(range(1, len(model_details['val_loss03']) + 1),
+                    model_details['val_loss03'], color=colors[2], linestyle=linestyles[1], marker=markers[1])
+
+        axs[1].set_title('Model Loss')
+        axs[1].set_ylabel('Loss')
+        axs[1].set_xlabel('Epoch')
+
+        axs[1].legend(legend, loc='best', prop={
+                      'size': 8.2, 'weight': 'semibold', 'family': 'monospace'})
+        axs[1].grid(True)
+
+        axs[0].set_xlim(0, 11)
+        axs[1].set_xlim(0, 11)
 
         # Save plot
         plt.savefig(path_to_save)
@@ -254,7 +343,7 @@ class PlotData(object):
         num_filters = weights.shape[3]
 
         # Create figure with a grid of sub-plots.
-        fig, axes = plt.subplots(8, 4)
+        fig, axes = plt.subplots(1, 4)
 
         # Plot all the filter-weights.
         for i, ax in enumerate(axes.flat):
@@ -277,6 +366,45 @@ class PlotData(object):
         # Colorbar
         cax, kw = matplotlib.colorbar.make_axes([ax for ax in axes.flat])
         plt.colorbar(im, cax=cax, **kw)
+        plt.savefig(filename)
+        plt.close()
+
+    def plot_conv_weights_3_4(self, image, weights, outputs, filename, input_channel=0):
+
+        plt.clf()
+
+        # Get the lowest and highest values for the weights.
+        # This is used to correct the colour intensity across
+        # the images so they can be compared with each other.
+        w_min = np.min(weights)
+        w_max = np.max(weights)
+
+        # Number of filters used in the conv. layer.
+        num_filters = weights.shape[3]
+
+        outputs_images = []
+        outputs_images.append(image)
+        outputs_images.append(image)
+        outputs_images.append(image)
+        outputs_images.append(image)
+
+        for i in xrange(4):
+            plt.subplot(3, 4, i + 1), plt.imshow(outputs_images[i], 'gray',
+                                                 interpolation='nearest')
+            plt.xticks([]), plt.yticks([])
+
+        for i in xrange(4):
+            img = weights[:, :, input_channel, i]
+            plt.subplot(3, 4, i + 5), plt.imshow(img,
+                                                 interpolation='nearest', cmap=plt.cm.bone)
+            plt.xticks([]), plt.yticks([])
+
+        for i in xrange(4):
+            img = outputs[0, :, :, i]
+            plt.subplot(3, 4, i + 9), plt.imshow(img,
+                                                 interpolation='nearest', cmap=plt.cm.bone)
+            plt.xticks([]), plt.yticks([])
+
         plt.savefig(filename)
         plt.close()
 
@@ -326,7 +454,7 @@ class PlotData(object):
     def plot_2d_array(self, arr, filename):
         plt.figure()
         plt.clf()
-        plt.imshow(arr, cmap=plt.cm.jet)
+        plt.imshow(arr, cmap=plt.cm.bone)
         plt.axis('off')
         plt.colorbar(orientation='vertical')
         plt.savefig(filename)
@@ -378,6 +506,32 @@ class PlotData(object):
 
                 # Plot image.
                 im = ax.imshow(img, interpolation='nearest', cmap=plt.cm.jet)
+
+            # Remove ticks from the plot.
+            ax.set_xticks([])
+            ax.set_yticks([])
+
+        cax, kw = matplotlib.colorbar.make_axes([ax for ax in axes.flat])
+        plt.colorbar(im, cax=cax, **kw)
+        plt.savefig(filename)
+        plt.close()
+
+    def plot_conv_output_1_4(self, values, filename):
+        # Number of filters used in the conv. layer.
+        num_filters = values.shape[3]
+
+        # Create figure with a grid of sub-plots.
+        fig, axes = plt.subplots(1, 4)
+
+        # Plot the output images of all the filters.
+        for i, ax in enumerate(axes.flat):
+            # Only plot the images for valid filters.
+            if i < num_filters:
+                # Get the output image of using the i'th filter.
+                img = values[0, :, :, i]
+
+                # Plot image.
+                im = ax.imshow(img, interpolation='nearest', cmap=plt.cm.bone)
 
             # Remove ticks from the plot.
             ax.set_xticks([])

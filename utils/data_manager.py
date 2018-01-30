@@ -36,7 +36,7 @@ class DataManager(object):
         # automagically retrieve images and their classes for train and
         # validation and test sets
         print("Train data:")
-        train_generator_augmented = train_datagen_augmented.flow_from_directory(
+        train_generator_augmented = datagen.flow_from_directory(
             train_data_dir,
             target_size=(self.img_width, self.img_height),
             classes=['cover', 'stego'],
