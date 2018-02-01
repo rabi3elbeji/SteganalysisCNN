@@ -8,7 +8,7 @@ In fact, the algorithm proposes a simple CNN architecture that was improved usin
 The table below shows the results according to the detection error of each algorithm (`WOW`, `HUGO`, `S-UNIWARD`) with the payloads (`1.0`, `0.7` , `0.5` , `0.3`) bpp.
 
 | --- | S-UNIWARD             | WOW                   | HUGO                  |
-| --- | --------------------- | --------------------- | --------------------- |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | --- | 1.0 | 0.7 | 0.5 | 0.3 | 1.0 | 0.7 | 0.5 | 0.3 | 1.0 | 0.7 | 0.5 | 0.3 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | --- | 1.0 | 0.7 | 0.5 | 0.3 | 1.0 | 0.7 | 0.5 | 0.3 | 1.0 | 0.7 | 0.5 | 0.3 |
