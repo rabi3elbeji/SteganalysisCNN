@@ -42,6 +42,10 @@ The paper of the article will be available soon.
 - Sickit-Learn
 - OpenCV 3
 
+## Authors:
+
+ - Marwa Saidi
+ - Rabii Elbeji
 
 License
 ----
