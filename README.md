@@ -5,7 +5,7 @@ This work inspired by a recent work of [Mo Chen et al](http://www.ws.binghamton.
 
 In fact, the algorithm proposes a simple CNN architecture that was improved using of catalyst kernels as initialization to neurons and weight propagation via transfer learning.
 
-The table below shows the results according to the detection error of each algorithm (`WOW`, `HUGO`, `S-UNIWARD`) with the payloads (`1.0`, `0.7` , `0.5` , `0.3`) bpp.
+The tables below show the results according to the detection error of each algorithm (`WOW`, `HUGO`, `S-UNIWARD`) with the payloads (`1.0`, `0.7` , `0.5` , `0.3`) bpp.
 
 - Experiment result of **`S-UNIWARD`** :
 
