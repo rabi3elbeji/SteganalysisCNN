@@ -9,20 +9,20 @@ In fact, the algorithm proposes a simple CNN architecture that was improved usin
 
 The tables below show the results according to the detection error of each algorithm (`WOW`, `HUGO`, `S-UNIWARD`) with the payloads (`1.0`, `0.7` , `0.5` , `0.3`) bpp.
 
-- Experiment result of **`S-UNIWARD`** :
+- Experiment results of **`S-UNIWARD`** :
 
 | payload (bpp) | 1.0 | 0.7 | 0.5 | 0.3 |
 | --- | --- | --- | --- | --- |
 | Pe  | 0.11 | 0.22 | 0.31 | 0.34 |
 
-- Experiment result of **`WOW`** :
+- Experiment results of **`WOW`** :
 
 | payload (bpp) | 1.0 | 0.7 | 0.5 | 0.3 |
 | --- | --- | --- | --- | --- |
 | Pe  | 0.08 | 0.17 | 0.21 | 0.30 |
 
 
-- Experiment result of **`HUGO`** :
+- Experiment results of **`HUGO`** :
 
 | payload (bpp) | 1.0 | 0.7 | 0.5 | 0.3 |
 | --- | --- | --- | --- | --- |
