@@ -19,9 +19,10 @@ class DataManager(object):
         # Data augmentation for improving the model
         train_datagen_augmented = ImageDataGenerator(
             rescale=1. / 255,        # normalize pixel values to [0,1]
-            shear_range=0.2,       # randomly applies shearing transformation
-            zoom_range=0.2,        # randomly applies shearing transformation
-            horizontal_flip=True)  # randomly flip the images
+            #shear_range=0.2,       # randomly applies shearing transformation
+            #zoom_range=0.2,        # randomly applies shearing transformation
+            horizontal_flip=True,
+            vertical_flip=True)  # randomly flip the images
 
         train_datagen_augmented2 = ImageDataGenerator(
             rotation_range=40,
@@ -36,7 +37,7 @@ class DataManager(object):
         # automagically retrieve images and their classes for train and
         # validation and test sets
         print("Train data:")
-        train_generator_augmented = datagen.flow_from_directory(
+        train_generator_augmented = train_datagen_augmented.flow_from_directory(
             train_data_dir,
             target_size=(self.img_width, self.img_height),
             classes=['cover', 'stego'],

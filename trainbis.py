@@ -22,7 +22,7 @@ K.set_image_dim_ordering('tf')
 
 # Model type
 model_type = 'wow_128_03'
-last_model_type = 'wow_128_04'
+last_model_type = 'wow_128_1'
 
 # test dataset img
 model_dataset = 'dataset_' + model_type
@@ -45,22 +45,22 @@ image_shape = (img_height, img_width, num_channels)
 class_number = 2
 
 # model ==> output paths
-model_png = './trained_for_pred/' + model_type + '/model/scratch_model.png'
-model_summary_file = './trained_for_pred/' + \
+model_png = './trained_for_pred_bis/' + model_type + '/model/scratch_model.png'
+model_summary_file = './trained_for_pred_bis/' + \
     model_type + '/model/scratch_model_summary.txt'
-saved_model_arch_path = './trained_for_pred/' + \
+saved_model_arch_path = './trained_for_pred_bis/' + \
     model_type + '/model/scratch_model.json'
-saved_model_classid_path = './trained_for_pred/' + \
+saved_model_classid_path = './trained_for_pred_bis/' + \
     model_type + '/model/scratch_model_classid.json'
-train_log_path = './trained_for_pred/' + \
+train_log_path = './trained_for_pred_bis/' + \
     model_type + '/model/log/model_train.csv'
-train_checkpoint_path = './trained_for_pred/' + model_type + \
+train_checkpoint_path = './trained_for_pred_bis/' + model_type + \
     '/model/log/Best-weights-my_model-{epoch:03d}-{loss:.4f}-{acc:.4f}.h5'
 model_tensorboard_log = './training_log/tensorbord/'
 
 
 # model training params
-num_of_epoch = 10
+num_of_epoch = 20
 num_of_train_samples = 3400
 num_of_validation_samples = 600
 
@@ -76,7 +76,7 @@ model_optimizer_adam = Adam(lr=0.003, decay=0.00001)
 model_optimizer_sgd = SGD(lr=1e-4, decay=1e-6, momentum=0.9, nesterov=True)
 
 
-best_weights = 'trained_for_pred/' + last_model_type + '/model/Best-weights.h5'
+best_weights = 'trained_for_pred_bis/' + last_model_type + '/model/Best-weights.h5'
 
 # model metrics to evaluate training
 model_metrics = ["accuracy"]
@@ -163,7 +163,7 @@ def main():
 
     model.set_weights([preprocess_weights])
 
-    # model.load_weights(best_weights)
+    #model.load_weights(best_weights)
 
     # Re-compile model with the setted wegiht
     model = scratchModel.compile_model(

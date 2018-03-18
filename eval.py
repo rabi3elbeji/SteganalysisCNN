@@ -14,7 +14,7 @@ from keras import backend as K
 K.set_image_dim_ordering('tf')
 
 # Model type
-model_type = 'hugo_128_03'
+model_type = 'wow_128_10'
 
 # Images width, height, channels
 img_height = 128
@@ -54,7 +54,7 @@ save_plt_loss = './trained_for_pred/' + \
     model_type + '/stats/model_loss.png'
 
 save_plt_learning = './trained_for_pred/' + \
-    model_type + '/stats/model_learning.png'
+    model_type + '/stats/model_learning.eps'
 # Cost function
 model_loss_function = 'binary_crossentropy'
 

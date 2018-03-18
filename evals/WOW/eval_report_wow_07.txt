@@ -1,0 +1,30 @@
+
+
+******************************************************
+**************   Evalaluation Report   ***************
+******************************************************
+
+
+- Accuracy Score: 0.82625
+
+- Mean Absolute Error (MAE): 0.17375
+
+- Mean Squared Error (MSE): 0.17375
+
+- Area Under the Curve (AUC): 0.82625
+
+- Confusion Matrix:
+[[344  56]
+ [ 83 317]]
+
+- Normalized Confusion Matrix:
+[[ 0.86    0.14  ]
+ [ 0.2075  0.7925]]
+
+- Classification report:
+             precision    recall  f1-score   support
+
+      cover       0.81      0.86      0.83       400
+      stego       0.85      0.79      0.82       400
+
+avg / total       0.83      0.83      0.83       800

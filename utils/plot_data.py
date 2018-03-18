@@ -15,6 +15,7 @@ class PlotData(object):
 
     def __init__(self):
         super(PlotData, self).__init__()
+       
         # matplotlib.style.use('ggplot')
 
     def plot_2d(self, x, y, x_label, y_label, title, legend_arr, path_to_save):
@@ -63,54 +64,75 @@ class PlotData(object):
 
         # Create sub-plots
         plt.clf()
+
+        font = {'family' : 'normal',
+        'weight' : 'bold',
+        'size'   : 16}
+        matplotlib.rc('font', **font)
+
+        plt.style.use('classic')
+
+
+
         fig, axs = plt.subplots(1, 2, figsize=(15, 5))
         # Summarize history for accuracy
         axs[0].plot(range(1, len(model_details['acc']) + 1),
-                    model_details['acc'])
+                    model_details['acc'], color='red', linestyle='-',  linewidth=2.0)
         axs[0].plot(range(1, len(model_details['val_acc']) + 1),
-                    model_details['val_acc'])
-        axs[0].set_title('Model Accuracy')
-        axs[0].set_ylabel('Accuracy')
-        axs[0].set_xlabel('Epoch')
-        axs[0].set_xticks(np.arange(1, len(model_details[
-                          'acc']) + 1), len(model_details['acc']) / 10)
-        axs[0].legend(['train', 'validation'], loc='best')
+                    model_details['val_acc'], color='blue', linestyle='-',  linewidth=2.0)
+        axs[0].set_title('Model Accuracy', fontsize=14)
+        axs[0].set_ylabel('Accuracy', fontsize=14)
+        axs[0].set_xlabel('Epoch', fontsize=14)
+        #axs[0].set_xticks(np.arange(1, len(model_details[
+        #                 'acc']) + 1), len(model_details['acc']) / 10)
+    
+        axs[0].legend(['train', 'validation'], loc=4, prop={
+                   'size': 11.2, 'weight': 'semibold', 'family': 'monospace'})
 
         # Summarize history for loss
         axs[1].plot(range(1, len(model_details['loss']) + 1),
-                    model_details['loss'])
+                    model_details['loss'], color='red', linestyle='-',  linewidth=2.0)
         axs[1].plot(range(1, len(model_details['val_loss']) + 1),
-                    model_details['val_loss'])
-        axs[1].set_title('Model Loss')
-        axs[1].set_ylabel('Loss')
-        axs[1].set_xlabel('Epoch')
-        axs[1].set_xticks(np.arange(1, len(model_details[
-                          'loss']) + 1), len(model_details['loss']) / 10)
-        axs[1].legend(['train', 'validation'], loc='best')
+                    model_details['val_loss'], color='blue', linestyle='-',  linewidth=2.0)
+        axs[1].set_title('Model Loss', fontsize=14)
+        axs[1].set_ylabel('Loss', fontsize=14)
+        axs[1].set_xlabel('Epoch', fontsize=14)
+        #axs[1].set_xticks(np.arange(1, len(model_details[
+        #                  'loss']) + 1), len(model_details['loss']) / 10)
+        
 
+        axs[1].legend(['train', 'validation'], loc='best', prop={
+                   'size': 11.2, 'weight': 'semibold', 'family': 'monospace'})
+        axs[1].grid(True)
+        axs[0].grid(True)
         # Save plot
-        plt.savefig(path_to_save)
+        plt.savefig(path_to_save, format='eps', dpi=1200)
 
         # This is not part of the code (is just for plotting custom data)
     def plot_detection_error(self, data_x, data_y, colors, linestyles, markers, legend, path_to_save):
         plt.clf()
+        font = {'family' : 'normal',
+        'weight' : 'bold',
+        'size'   : 16}
+        matplotlib.rc('font', **font)
 
         plt.style.use('classic')
+        
         plt.plot(data_x, data_y[0], color=colors[0],
-                 linestyle=linestyles[0], marker=markers[0])
+                 linestyle=linestyles[0], marker=markers[0], linewidth=3.0)
         plt.plot(data_x, data_y[1], color=colors[1],
-                 linestyle=linestyles[0], marker=markers[1])
+                 linestyle=linestyles[0], marker=markers[1], linewidth=3.0)
         plt.plot(data_x, data_y[2], color=colors[2],
-                 linestyle=linestyles[0], marker=markers[2])
-        plt.ylabel(r'$P_{E}$')
-        plt.xlabel('Payload (bpp)')
+                 linestyle=linestyles[0], marker=markers[2], linewidth=3.0)
+        plt.ylabel(r'$P_{E}$', fontsize=14)
+        plt.xlabel('Payload (bpp)', fontsize=14)
         plt.legend(legend, loc='best', prop={
-                   'size': 10.2, 'weight': 'semibold', 'family': 'monospace'})
+                   'size': 11.2, 'weight': 'semibold', 'family': 'monospace'})
         plt.grid(True)
-        plt.xticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+        plt.xticks([0.2, 0.3, 0.4, 0.5, 0.6,
                     0.7, 0.8, 0.9, 1.0, 1.1])
         # Save plot
-        plt.savefig(path_to_save)
+        plt.savefig(path_to_save, format='eps', dpi=1000)
 
     # This is not part of the code (is just for plotting custom data)
     def plot_custom_data(self, model_details, colors, linestyles, markers, legend, path_to_save):
@@ -139,9 +161,9 @@ class PlotData(object):
         axs[0].plot(range(1, len(model_details['val_acc03']) + 1),
                     model_details['val_acc03'], color=colors[2], linestyle=linestyles[1], marker=markers[1])
 
-        axs[0].set_title('Model Accuracy')
-        axs[0].set_ylabel('Accuracy')
-        axs[0].set_xlabel('Epoch')
+        axs[0].set_title('Model Accuracy', fontsize=14)
+        axs[0].set_ylabel('Accuracy', fontsize=14)
+        axs[0].set_xlabel('Epoch', fontsize=14)
 
         axs[0].legend(legend, loc='best', prop={
                       'size': 8.2, 'weight': 'semibold', 'family': 'monospace'})
@@ -166,9 +188,9 @@ class PlotData(object):
         axs[1].plot(range(1, len(model_details['val_loss03']) + 1),
                     model_details['val_loss03'], color=colors[2], linestyle=linestyles[1], marker=markers[1])
 
-        axs[1].set_title('Model Loss')
-        axs[1].set_ylabel('Loss')
-        axs[1].set_xlabel('Epoch')
+        axs[1].set_title('Model Loss', fontsize=14)
+        axs[1].set_ylabel('Loss', fontsize=14)
+        axs[1].set_xlabel('Epoch', fontsize=14)
 
         axs[1].legend(legend, loc='best', prop={
                       'size': 8.2, 'weight': 'semibold', 'family': 'monospace'})
@@ -178,7 +200,7 @@ class PlotData(object):
         axs[1].set_xlim(0, 11)
 
         # Save plot
-        plt.savefig(path_to_save)
+        plt.savefig(path_to_save, format='eps', dpi=1200)
 
     def plot_confusion_matrix(self, cm, classes,
                               path_to_save,
@@ -234,17 +256,78 @@ class PlotData(object):
         plt.figure()
         plt.clf()
         plt.plot(fpr, tpr, color='darkorange',
-                 label='ROC curve (area = %0.2f)' % roc_auc)
+                 label='ROC curve (AUC = %0.2f)' % roc_auc)
         plt.plot([0, 1], [0, 1], color='navy', linestyle='--')
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title('Receiver operating characteristic curve')
+        plt.title('ROC Curves')
         plt.legend(loc="best")
         plt.savefig(filename)
         plt.close()
         return roc_auc
+
+    def plot_roc_(self, y_trues, y_scores, colors, linestyles, legend, filename):
+        '''
+        Plot the ROC for this model.
+        '''
+
+        plt.figure()
+        plt.clf()
+    
+
+
+        fpr0, tpr0, thresholds = roc_curve(y_trues[0], y_scores[0])
+        fpr1, tpr1, thresholds = roc_curve(y_trues[1], y_scores[1])
+        fpr2, tpr2, thresholds = roc_curve(y_trues[2], y_scores[2])
+        fpr3, tpr3, thresholds = roc_curve(y_trues[3], y_scores[3])
+
+        fpr4, tpr4, thresholds = roc_curve(y_trues[4], y_scores[4])
+        fpr5, tpr5, thresholds = roc_curve(y_trues[5], y_scores[5])
+        fpr6, tpr6, thresholds = roc_curve(y_trues[6], y_scores[6])
+        fpr7, tpr7, thresholds = roc_curve(y_trues[7], y_scores[7])
+        
+        fpr8, tpr8, thresholds = roc_curve(y_trues[8], y_scores[8])
+        fpr9, tpr9, thresholds = roc_curve(y_trues[9], y_scores[9])
+        fpr10, tpr10, thresholds = roc_curve(y_trues[10], y_scores[10])
+        fpr11, tpr11, thresholds = roc_curve(y_trues[11], y_scores[11])
+        
+
+        plt.plot(fpr0, tpr0, color=colors[0], linestyle=linestyles[0])
+        plt.plot(fpr1, tpr1, color=colors[0], linestyle=linestyles[1])
+        plt.plot(fpr2, tpr2, color=colors[0], linestyle=linestyles[2])
+        plt.plot(fpr3, tpr3, color=colors[0], linestyle=linestyles[3])
+
+        plt.plot(fpr4, tpr4, color=colors[1], linestyle=linestyles[0])
+        plt.plot(fpr5, tpr5, color=colors[1], linestyle=linestyles[1])
+        plt.plot(fpr6, tpr6, color=colors[1], linestyle=linestyles[2])
+        plt.plot(fpr7, tpr7, color=colors[1], linestyle=linestyles[3])
+        
+        plt.plot(fpr8, tpr8, color=colors[2], linestyle=linestyles[0])
+        plt.plot(fpr9, tpr9, color=colors[2], linestyle=linestyles[1])
+        plt.plot(fpr10, tpr10, color=colors[2], linestyle=linestyles[2])
+        plt.plot(fpr11, tpr11, color=colors[2], linestyle=linestyles[3])
+        
+
+        plt.plot([0, 1], [0, 1], color='black', linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.0])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curves')
+
+        plt.legend(legend, loc='best', prop={
+                   'size': 8.2, 'weight': 'semibold', 'family': 'monospace'})
+
+
+        plt.grid(True)
+        plt.xticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+                    0.7, 0.8, 0.9, 1.0])
+        plt.yticks([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+                    0.7, 0.8, 0.9, 1.0])
+        plt.savefig(filename)
+        plt.close()
 
     def plot_conv_weights(self, weights, filename, input_channel=0):
         plt.figure()

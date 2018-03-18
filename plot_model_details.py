@@ -14,13 +14,13 @@ from keras import backend as K
 K.set_image_dim_ordering('tf')
 
 # model type
-model_type = 'wow_128_04'
+model_type = 'wow_128_01'
 input_image_path = './test.jpg'
 
 
 # path to saved model files
 saved_model_weights_path = './trained_for_pred/' + \
-    model_type + '/model/scratch_model.h5'
+    model_type + '/model/Best-weights.h5'
 saved_model_arch_path = './trained_for_pred/' + \
     model_type + '/model/scratch_model.json'
 
@@ -106,47 +106,23 @@ def main():
     model = load_model()
     layer_input = model.layers[0]
     layer_conv1 = model.layers[1]
-    layer_pool1 = model.layers[3]
-    layer_conv2 = model.layers[4]
-    layer_pool2 = model.layers[6]
-    layer_conv3 = model.layers[7]
-    layer_pool3 = model.layers[9]
     weights_conv1 = layer_conv1.get_weights()[0]
-    weights_conv2 = layer_conv2.get_weights()[0]
-    weights_conv3 = layer_conv3.get_weights()[0]
-    plotData.plot_conv_weights_8_4(weights_conv1, saved_weights_conv1_path)
-    plotData.plot_conv_weights_8_4(weights_conv2, saved_weights_conv2_path)
-    plotData.plot_conv_weights(weights_conv3, saved_weights_conv3_path)
-    plotData.plot_2d_array(hpf_kernel, saved_hpf_path)
+ 
+    
 
     input_image = preprocess(input_image_path)
 
     output_conv1 = K.function(inputs=[layer_input.input],
                               outputs=[layer_conv1.output])
-    output_conv2 = K.function(inputs=[layer_input.input],
-                              outputs=[layer_conv2.output])
-    output_conv3 = K.function(inputs=[layer_input.input],
-                              outputs=[layer_conv3.output])
-
-    output_pool1 = K.function(inputs=[layer_input.input],
-                              outputs=[layer_pool1.output])
-
-    output_pool2 = K.function(inputs=[layer_input.input],
-                              outputs=[layer_pool2.output])
-
-    output_pool3 = K.function(inputs=[layer_input.input],
-                              outputs=[layer_pool3.output])
 
     layer_output1 = output_conv1([[input_image]])[0]
-    layer_output2 = output_conv2([[input_image]])[0]
-    layer_output3 = output_conv3([[input_image]])[0]
-    pool_output1 = output_pool1([[input_image]])[0]
-    pool_output2 = output_pool2([[input_image]])[0]
-    pool_output3 = output_pool3([[input_image]])[0]
 
-    plotData.plot_conv_output_8_4(layer_output1, saved_images_conv1_path)
-    plotData.plot_conv_output_8_4(layer_output2, saved_images_conv2_path)
-    plotData.plot_conv_output(layer_output3, saved_images_conv3_path)
+    plotData.plot_conv_output_1_4(layer_output1, saved_images_conv1_path)
+
+    image = cv2.imread(input_image_path, 0)
+    plotData.plot_conv_weights_3_4(image, weights_conv1, layer_output1, saved_weights_conv1_path)
+
+
 
     '''
     plotData.plot_conv_output_8_4(pool_output1, saved_images_pool1_path)
