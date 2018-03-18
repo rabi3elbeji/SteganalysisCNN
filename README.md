@@ -30,7 +30,7 @@ The tables below show the results according to the detection error of each algor
 | Pe  | 0.04 | 0.09 | 0.16 | 0.31 |
 
 
-![alt text](images/detection_error_compare.eps "Detection errors")
+![alt text](images/detection_error_compare.png "Detection errors")
 
 ![alt text](images/model_roc_curves.png "ROC curves")
 
