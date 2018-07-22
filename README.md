@@ -48,6 +48,12 @@ The paper of the article will be available soon.
  - [Rabii Elbeji](https://rabi3elbeji.github.io)
  - Marwa Saidi
 
+Please cite our article if this code helps you in some way
+
+```
+El Beji R., Saidi M., Hermassi H., Rhouma R. (2018) An Improved CNN Steganalysis Architecture Based on “Catalyst Kernels” and Transfer Learning. In: Bach Tobji M., Jallouli R., Koubaa Y., Nijholt A. (eds) Digital Economy. Emerging Technologies and Business Innovation. ICDEc 2018. Lecture Notes in Business Information Processing, vol 325. Springer, Cham
+```
+
 License
 ----
 
